@@ -111,6 +111,7 @@ class Trainer(object):
         else:
             self.model.cpu()
 
+        initial_jaccard = 0.0
         for epoch in range(epochs):
             for phase in ['train', 'val']:
                 # Time
@@ -159,16 +160,18 @@ class Trainer(object):
 
                 # Time
                 end_time = time.time()
-                cost = end_time - start_time
+                time_cost = end_time - start_time
 
                 # Print Summary for Each Epoch
-                print(f'Epoch {epoch + 1}/{epochs} {cost:.1f}s | {phase:^5} | Loss: {epoch_loss:.4f} | Jaccard: {epoch_jaccard:.4f}')
+                self.logger(f'Epoch {epoch + 1}/{epochs} {time_cost:.1f}s | {phase:^5} | ' +
+                            f'Loss: {epoch_loss:.4f} | Jaccard: {epoch_jaccard:.4f}')
 
                 # Only Save Model with Better Jaccard
-                # if phase == 'val' and epoch_jaccard > initial_jaccard:
-                #     print('saving...')
-                #     initial_jaccard = epoch_jaccard
-                #     torch.save(self.model.state_dict(), filename)
+                if phase == 'val' and (epoch_jaccard > initial_jaccard or initial_jaccard is None):
+                    self.logger(f'Saving the model with jaccard {epoch_jaccard}...')
+                    initial_jaccard = epoch_jaccard
+                    torch.save(self.model.state_dict(), self.config['model_output_file'] +
+                               f'model_{time.time()}_jaccard{epoch_jaccard}.pth')
 
     @staticmethod
     def __unpack_data(batch_data):

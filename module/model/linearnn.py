@@ -35,7 +35,7 @@ class LinearNN(nn.Module):
     def __create_model(self):
         # roBERTa
         roberta_config = RobertaConfig.from_pretrained(self.config['roberta_config_file_path'], output_hidden_states=True)
-        self.roberta = RobertaModel.from_pretrained(self.config['model_file_path'], config=roberta_config)
+        self.roberta = RobertaModel.from_pretrained(self.config['roberta_model_file_path'], config=roberta_config)
 
         # Dropout
         self.dropout = nn.Dropout(0.5)

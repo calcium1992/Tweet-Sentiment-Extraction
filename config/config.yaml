@@ -6,10 +6,11 @@ preprocessing:
   maxlen: 128
   batch_size: 32
 training:
-  model_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/pytorch_model.bin
+  roberta_model_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/pytorch_model.bin
   roberta_config_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/config.json
+  model_output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/model/
   maxlen: 128
-  epochs: 5
-  learning_rate: 3e-5
+  epochs: 2
+  learning_rate: 0.00003
 predict:
-  output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/toxic-comments-classification/mini_submission.csv
+  model_output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/model/
