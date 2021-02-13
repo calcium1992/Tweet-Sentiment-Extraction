@@ -1,0 +1,9 @@
+numpy
+pandas
+pyyaml
+tqdm
+sklearn
+torch
+torchsummary
+tokenizers==0.8.1.rc2
+transformers==3.3.1

@@ -1,0 +1,15 @@
+preprocessing:
+  vocab_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/vocab.json
+  merge_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/merges.txt
+  training_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/train.csv
+  test_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/test.csv
+  maxlen: 128
+  batch_size: 32
+training:
+  model_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/pytorch_model.bin
+  roberta_config_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/config.json
+  maxlen: 128
+  epochs: 5
+  learning_rate: 3e-5
+predict:
+  output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/toxic-comments-classification/mini_submission.csv
