@@ -66,8 +66,7 @@ class Loss_Function(object):
 class Evaluation_Function(object):
     @staticmethod
     def jaccard_score(text, start_idx, end_idx, start_logits, end_logits, offsets):
-        start_pred = np.argmax(start_logits)
-        end_pred = np.argmax(end_logits)
+        start_pred, end_pred = np.argmax(start_logits), np.argmax(end_logits)
         if start_pred > end_pred:
             pred = text
         else:

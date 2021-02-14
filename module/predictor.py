@@ -1,6 +1,7 @@
 import csv
 import os
 import numpy as np
+from tqdm import tqdm
 import torch
 from module.model import LinearNN
 from module.trainer import Evaluation_Function
@@ -15,7 +16,7 @@ class Predictor(object):
 
     def predict(self):
         predictions = []
-        for data in self.preprocessor.test_loader:
+        for data in tqdm(self.preprocessor.test_loader):
             ids, masks, tweet, offsets = Predictor.__unpack_data(data)
 
             start_logits, end_logits = [], []
