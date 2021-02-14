@@ -30,8 +30,7 @@ if __name__ == "__main__":
 
             # Predicting
             predictor = Predictor(config=config['predict'], logger=logger, preprocessor=preprocessor)
-            predictions = predictor.predict()
-            print(predictions)
-            # predictor.save_result(preprocessor.test_ids, y_prob_pred)
+            predictor.predict()
+            predictor.save_result()
         except yaml.YAMLError as err:
             logger.warning(f'Config file err: {err}')

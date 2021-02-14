@@ -1,6 +1,7 @@
 import csv
 import os
 import numpy as np
+import pandas as pd
 from tqdm import tqdm
 import torch
 from module.model import LinearNN
@@ -13,9 +14,9 @@ class Predictor(object):
         self.logger = logger
         self.preprocessor = preprocessor
         self.models = self.__load_models()
+        self.predictions = []
 
     def predict(self):
-        predictions = []
         for data in tqdm(self.preprocessor.test_loader):
             ids, masks, tweet, offsets = Predictor.__unpack_data(data)
 
@@ -33,11 +34,24 @@ class Predictor(object):
                     pred = tweet[i]
                 else:
                     pred = Evaluation_Function.get_selected_text(tweet[i], start_pred, end_pred, offsets[i])
-                predictions.append(pred)
-        return predictions
+                self.predictions.append(pred)
 
-    def save_result(self, test_ids, y_prob_pred):
-        pass
+    def save_result(self):
+        selected_texts = []
+        for index, row in tqdm(self.preprocessor.test_df.iterrows()):
+            text = row.text
+            output_str = ""
+            if row.sentiment == 'neutral' or len(text.split()) <= 2:
+                selected_texts.append(text)
+            else:
+                selected_texts.append(self.predictions[index])
+
+        sub_df = pd.read_csv(self.config['sample_submission_file_path'])
+        sub_df['selected_text'] = selected_texts
+        sub_df['selected_text'] = sub_df['selected_text'].apply(lambda x: x.replace('!!!!', '!') if len(x.split()) == 1 else x)
+        sub_df['selected_text'] = sub_df['selected_text'].apply(lambda x: x.replace('..', '.') if len(x.split()) == 1 else x)
+        sub_df['selected_text'] = sub_df['selected_text'].apply(lambda x: x.replace('...', '.') if len(x.split()) == 1 else x)
+        sub_df.to_csv(self.config['submission_file_path'], index=False)
 
     def __load_models(self):
         models = []

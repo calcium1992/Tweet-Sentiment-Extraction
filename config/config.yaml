@@ -16,3 +16,6 @@ predict:
   roberta_model_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/pytorch_model.bin
   roberta_config_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/config.json
   model_output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/model/
+  sample_submission_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/sample_submission.csv
+  submission_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/submission.csv
+
