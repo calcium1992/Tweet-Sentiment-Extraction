@@ -11,6 +11,8 @@ training:
   model_output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/model/
   maxlen: 128
   epochs: 2
-  learning_rate: 0.00003
+  model_output_filelearning_rate: 0.00003
 predict:
+  roberta_model_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/pytorch_model.bin
+  roberta_config_file_path: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/roberta-base/config.json
   model_output_file: /Users/songyihe/Documents/Study/AI Projects/large-datasets/tweet-sentiment-extraction/model/

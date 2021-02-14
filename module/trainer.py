@@ -1,6 +1,5 @@
 import numpy as np
 import time
-from datetime import datetime
 from tqdm import tqdm
 import torch
 from torch import nn
@@ -72,14 +71,14 @@ class Evaluation_Function(object):
         if start_pred > end_pred:
             pred = text
         else:
-            pred = Evaluation_Function.__get_selected_text(text, start_pred, end_pred, offsets)
+            pred = Evaluation_Function.get_selected_text(text, start_pred, end_pred, offsets)
 
-        true = Evaluation_Function.__get_selected_text(text, start_idx, end_idx, offsets)
+        true = Evaluation_Function.get_selected_text(text, start_idx, end_idx, offsets)
 
         return Evaluation_Function.__compute_jaccard_value(true, pred)
 
     @staticmethod
-    def __get_selected_text(text, start_idx, end_idx, offsets):
+    def get_selected_text(text, start_idx, end_idx, offsets):
         selected_text = ""
         for ix in range(start_idx, end_idx + 1):
             selected_text += text[offsets[ix][0]: offsets[ix][1]]
@@ -169,10 +168,10 @@ class Trainer(object):
 
                 # Only Save Model with Better Jaccard
                 if phase == 'val' and (epoch_jaccard > initial_jaccard or initial_jaccard is None):
-                    self.logger.info(f'Saving the model with jaccard {epoch_jaccard}...')
+                    self.logger.info(f'Saving the model with jaccard {round(epoch_jaccard,4)}...')
                     initial_jaccard = epoch_jaccard
                     torch.save(self.model.state_dict(), self.config['model_output_file'] +
-                               f'model_{datetime.now()}_jaccard{epoch_jaccard}.pth')
+                               f'model_fold_{fold}_epoch_{epoch}_jaccard_{round(epoch_jaccard,4)}.pth')
 
     def kfold_training(self, num_fold=5):
         for fold in range(num_fold):
