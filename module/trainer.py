@@ -103,7 +103,7 @@ class Trainer(object):
         self.optimizer = optim.AdamW(self.model.parameters(),
                                      lr=self.config['learning_rate'], betas=(0.9, 0.999), weight_decay=1.2e-2)
 
-    def fit(self):
+    def fit(self, fold=None):
         train_val_loaders_dict = {"train": self.preprocessor.train_loader, "val": self.preprocessor.val_loader}
         epochs = self.config['epochs']
 
@@ -164,8 +164,8 @@ class Trainer(object):
                 time_cost = end_time - start_time
 
                 # Print Summary for Each Epoch
-                self.logger.info(f'Epoch {epoch + 1}/{epochs} {time_cost:.1f}s | {phase:^5} | ' +
-                            f'Loss: {epoch_loss:.4f} | Jaccard: {epoch_jaccard:.4f}')
+                self.logger.info(f'Fold {fold}-Epoch {epoch + 1}/{epochs}: {time_cost:.1f}s | {phase:^5} | ' +
+                                 f'Loss: {epoch_loss:.4f} | Jaccard: {epoch_jaccard:.4f}')
 
                 # Only Save Model with Better Jaccard
                 if phase == 'val' and (epoch_jaccard > initial_jaccard or initial_jaccard is None):
@@ -176,8 +176,9 @@ class Trainer(object):
 
     def kfold_training(self, num_fold=5):
         for fold in range(num_fold):
+            self.logger.info(f'Training Fold {fold}...')
             self.preprocessor.generate_data_loaders(test_size=1.0/num_fold)
-            self.fit()
+            self.fit(fold=fold)
 
     @staticmethod
     def __unpack_data(batch_data):
