@@ -43,6 +43,7 @@ class Predictor(object):
         os.chdir(self.config['model_output_file'])
         for root, dirs, files in os.walk(".", topdown=False):
             for name in files:
+                self.logger.info(f'Loading Model: {name}')
                 model = LinearNN(self.config)
                 if torch.cuda.is_available():
                     model.cuda()
