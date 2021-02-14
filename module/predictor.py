@@ -38,7 +38,7 @@ class Predictor(object):
 
     def save_result(self):
         selected_texts = []
-        for index, row in tqdm(self.preprocessor.test_df.iterrows()):
+        for index, row in self.preprocessor.test_df.iterrows():
             text = row.text
             output_str = ""
             if row.sentiment == 'neutral' or len(text.split()) <= 2:

@@ -25,8 +25,8 @@ if __name__ == "__main__":
             preprocessor.generate_data_loaders()
 
             # Training
-            # trainer = Trainer(config=config['training'], logger=logger, preprocessor=preprocessor)
-            # trainer.kfold_training()
+            trainer = Trainer(config=config['training'], logger=logger, preprocessor=preprocessor)
+            trainer.kfold_training()
 
             # Predicting
             predictor = Predictor(config=config['predict'], logger=logger, preprocessor=preprocessor)
