@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
             # Training
             trainer = Trainer(config=config['training'], logger=logger, preprocessor=preprocessor)
-            trainer.fit()
+            trainer.kfold_training()
 
             # Predicting
             # predictor = Predictor(config=config['predict'], logger=logger, model=trainer.model)

@@ -107,8 +107,8 @@ class Preprocessor(object):
         self.__read_files()
         self.train_loader, self.val_loader, self.test_loader = None, None, None
 
-    def generate_data_loaders(self):
-        train_df, val_df, _, _ = train_test_split(self.train_val_df, self.train_val_df['sentiment'], test_size=0.2)
+    def generate_data_loaders(self, test_size=0.2):
+        train_df, val_df, _, _ = train_test_split(self.train_val_df, self.train_val_df['sentiment'], test_size=test_size)
         self.train_loader = torch.utils.data.DataLoader(TweetDataset(train_df, self.config),
                                                         batch_size=self.config['batch_size'], shuffle=True,
                                                         num_workers=0, drop_last=True)

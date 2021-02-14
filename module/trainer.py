@@ -1,5 +1,6 @@
 import numpy as np
 import time
+from datetime import datetime
 from tqdm import tqdm
 import torch
 from torch import nn
@@ -163,15 +164,20 @@ class Trainer(object):
                 time_cost = end_time - start_time
 
                 # Print Summary for Each Epoch
-                self.logger(f'Epoch {epoch + 1}/{epochs} {time_cost:.1f}s | {phase:^5} | ' +
+                self.logger.info(f'Epoch {epoch + 1}/{epochs} {time_cost:.1f}s | {phase:^5} | ' +
                             f'Loss: {epoch_loss:.4f} | Jaccard: {epoch_jaccard:.4f}')
 
                 # Only Save Model with Better Jaccard
                 if phase == 'val' and (epoch_jaccard > initial_jaccard or initial_jaccard is None):
-                    self.logger(f'Saving the model with jaccard {epoch_jaccard}...')
+                    self.logger.info(f'Saving the model with jaccard {epoch_jaccard}...')
                     initial_jaccard = epoch_jaccard
                     torch.save(self.model.state_dict(), self.config['model_output_file'] +
-                               f'model_{time.time()}_jaccard{epoch_jaccard}.pth')
+                               f'model_{datetime.now()}_jaccard{epoch_jaccard}.pth')
+
+    def kfold_training(self, num_fold=5):
+        for fold in range(num_fold):
+            self.preprocessor.generate_data_loaders(test_size=1.0/num_fold)
+            self.fit()
 
     @staticmethod
     def __unpack_data(batch_data):
