@@ -70,9 +70,6 @@ class TweetDataset(torch.utils.data.Dataset):
         return ids, masks, tweet, offsets
 
     def __get_target_idx(self, row, tweet, offsets):
-        # ???How to implement to get start index and end index???
-        # Situation like "sooo sad" into [so, oo, sad] is tricky.
-
         selected_text = " " + " ".join(row.selected_text.lower().split())
 
         len_st = len(selected_text) - 1
